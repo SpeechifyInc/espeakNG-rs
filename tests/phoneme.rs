@@ -5,7 +5,9 @@ use base::init;
 #[test]
 fn espeak() -> Result<(), espeakng::Error> {
     assert_eq!(
-        init().text_to_phonemes("Hello world", espeakng::PhonemeGenOptions::Standard)?.unwrap(),
+        init()
+            .text_to_phonemes("Hello world", espeakng::PhonemeGenOptions::Standard)?
+            .unwrap(),
         include_str!("../test_data/hello_world.pho")
     );
 
@@ -18,7 +20,9 @@ fn mbrola() -> Result<(), espeakng::Error> {
     speaker.set_voice_raw("mb/mb-en1")?;
 
     assert_eq!(
-        speaker.text_to_phonemes("Hello world", espeakng::PhonemeGenOptions::Mbrola)?.unwrap(),
+        speaker
+            .text_to_phonemes("Hello world", espeakng::PhonemeGenOptions::Mbrola)?
+            .unwrap(),
         include_str!("../test_data/hello_world_mbrola.pho")
     );
 

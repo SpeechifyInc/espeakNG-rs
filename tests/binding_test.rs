@@ -2,9 +2,8 @@
 
 use std::ffi::{c_void, CStr};
 
-use zstr::zstr;
-
 use espeakng::bindings;
+use zstr::zstr;
 
 #[test]
 fn binding_check() -> Result<(), Box<dyn std::error::Error>> {
@@ -13,22 +12,25 @@ fn binding_check() -> Result<(), Box<dyn std::error::Error>> {
     let hello_world = zstr!("Hello world");
 
     unsafe {
-        bindings::espeak_Initialize(bindings::espeak_AUDIO_OUTPUT_AUDIO_OUTPUT_RETRIEVAL, 0, std::ptr::null(), 0);
+        bindings::espeak_Initialize(
+            bindings::espeak_AUDIO_OUTPUT_AUDIO_OUTPUT_RETRIEVAL,
+            0,
+            std::ptr::null(),
+            0,
+        );
         loop {
             let r = bindings::espeak_SetVoiceByName(en.as_ptr());
-            if r == 0 {break}
+            if r == 0 {
+                break;
+            }
         }
 
         let mut buf = vec![0; 205];
-        let fake_file = libc::fmemopen(
-            buf.as_mut_ptr() as *mut libc::c_void,
-            200,
-            mode.as_ptr()
-        );
+        let fake_file = libc::fmemopen(buf.as_mut_ptr() as *mut libc::c_void, 200, mode.as_ptr());
 
         bindings::espeak_SetPhonemeTrace(
             bindings::espeakPHONEMES_MBROLA as i32,
-            std::mem::transmute(fake_file)
+            std::mem::transmute(fake_file),
         );
 
         bindings::espeak_ng_Synthesize(
@@ -39,7 +41,7 @@ fn binding_check() -> Result<(), Box<dyn std::error::Error>> {
             0,
             bindings::espeakCHARS_AUTO,
             std::ptr::null_mut(),
-            std::ptr::null_mut()
+            std::ptr::null_mut(),
         );
 
         bindings::espeak_Synchronize();
