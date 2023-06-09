@@ -81,7 +81,7 @@ pub struct Speaker {
 }
 
 impl Speaker {
-    pub const DEFAULT_VOICE: &'static str = "gmw/en";
+    pub const DEFAULT_VOICE: &'static str = "en-US";
 
     fn initialise(voice_path: Option<&str>) -> Result<Self> {
         unsafe extern "C" fn synth_callback(
