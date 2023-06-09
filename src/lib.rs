@@ -338,7 +338,7 @@ impl Speaker {
             CStr::from_ptr(bindings::espeak_TextToPhonemes(
                 &mut text_nul_term.as_ptr().cast() as *mut *const std::ffi::c_void,
                 bindings::espeakCHARS_UTF8 as i32,
-                0,
+                2,
             ))
         };
 
